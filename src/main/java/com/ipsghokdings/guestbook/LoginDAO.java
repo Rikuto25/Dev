@@ -1,4 +1,4 @@
-package com.ipsghokdings.shoppingAns;
+package com.ipsghokdings.guestbook;
 
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.SqlSession;

@@ -1,4 +1,4 @@
-package com.ipsghokdings.shoppingAns;
+package com.ipsghokdings.guestbook;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
