@@ -1,139 +1,145 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    	$(function() {
-    		//更新
-    		$("#btnUpdate").click(function() {
-    			/* let writer = $("#writer").val();
-    			let memo =$("#memo").val();
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(function () {
+			//更新
+			$("#btnUpdate").click(function () {
+				/* let writer = $("#writer").val();
+				let memo =$("#memo").val();
 
-    			if(writer == "") { //空白値チェック
-    				alert("名前を入力してください。");
-    				return;
-    			}
+				if(writer == "") { //空白値チェック
+					alert("名前を入力してください。");
+					return;
+				}
 
-    			if(writer == "") { //空白値チェック
-    				alert("メモを入力してください。");
-    				return;
-    			} */
+				if(writer == "") { //空白値チェック
+					alert("メモを入力してください。");
+					return;
+				} */
 
-    			document.form1.action="/memo/memoupdate";
-    			document.form1.submit();
-    		});
-    		
-    		// 削除
-    		$("#btnDelete").click(function() {
+				document.form1.action = "/memo/memoupdate";
+				document.form1.submit();
+			});
 
-    			document.form1.action="/memo/memodelete";
-    			document.form1.submit();
-    		});
-    		
-    		// 目録
-    		$("#btnBack").click(function() {
+			// 削除
+			$("#btnDelete").click(function () {
 
-    			document.form1.action="/memo/memojoin";
-    			document.form1.submit();
-    		});
-    	});
-    
-    </script>
-    <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-  }
+				document.form1.action = "/memo/memodelete";
+				document.form1.submit();
+			});
 
-  .form-container {
-    width: 50%;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
+			// 目録
+			$("#btnBack").click(function () {
 
-  h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
+				document.form1.action = "/memo/memojoin";
+				document.form1.submit();
+			});
+		});
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+	</script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f5f5f5;
+		}
 
-  input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+		.form-container {
+			width: 50%;
+			margin: 20px auto;
+			padding: 20px;
+			border: 1px solid #ddd;
+			background-color: #fff;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		}
 
-  input[type="button"] {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
+		h2 {
+			font-size: 24px;
+			margin-bottom: 10px;
+		}
 
-  #btnUpdate {
-    background-color: #3cb371;
-  }
-    #btnDelete {
-    background-color: #ff0000;
-  }
-    #btnBack {
-    background-color: #a9a9a9;
-  }
-        .header {
-    background-color: #333;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
 
-  .header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px;
-  }
+		input[type="text"] {
+			width: 100%;
+			padding: 8px;
+			margin-bottom: 10px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-size: 16px;
+		}
 
-  .header a:hover {
-    text-decoration: underline;
-  }
-</style>
+		input[type="button"] {
+			background-color: #007bff;
+			color: white;
+			padding: 8px 20px;
+			border: none;
+			border-radius: 4px;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		#btnUpdate {
+			background-color: #3cb371;
+		}
+
+		#btnDelete {
+			background-color: #ff0000;
+		}
+
+		#btnBack {
+			background-color: #a9a9a9;
+		}
+
+		.header {
+			background-color: #333;
+			padding: 10px 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.header a {
+			color: white;
+			text-decoration: none;
+			margin: 0 15px;
+			font-size: 16px;
+		}
+
+		.header a:hover {
+			text-decoration: underline;
+		}
+	</style>
 </head>
+
 <body>
-<th:block th:include="header"></th:block>
-    <div class="form-container">
-    <form name="form1" method="post">
-      <h2>メモ帳</h2>
-      <label>名前：</label>
-      <input type="text" name="writer" th:value="${memodetail.writer}" readonly><br>
-      <label>メモ：</label>
-      <input type="text" name="memo" th:value="${memodetail.memo}"><br>
-      <input type="hidden" name="idx" th:value="${memodetail.idx}">
-      <th:block th:if="${flag}">
-        <input type="button" id="btnUpdate" value="修正" class="btn btn-outline-primary">
-        <input type="button" id="btnDelete" value="削除" class="btn btn-outline-primary">
-      </th:block>
-      <input type="button" id="btnBack" value="目録" class="btn btn-outline-primary">
-    </form>
-  </div>
+	<th:block th:include="header"></th:block>
+	<div class="form-container">
+		<form name="form1" method="post">
+			<h2>メモ帳</h2>
+			<label>名前：</label>
+			<input type="text" name="writer" th:value="${memodetail.writer}" readonly><br>
+			<label>メモ：</label>
+			<input type="text" name="memo" th:value="${memodetail.memo}"><br>
+			<input type="hidden" name="idx" th:value="${memodetail.idx}">
+			<th:block th:if="${flag}">
+				<input type="button" id="btnUpdate" value="修正" class="btn btn-outline-primary">
+				<input type="button" id="btnDelete" value="削除" class="btn btn-outline-primary">
+			</th:block>
+			<input type="button" id="btnBack" value="目録" class="btn btn-outline-primary">
+		</form>
+	</div>
 </body>
+
 </html>

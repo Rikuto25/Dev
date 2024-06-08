@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>header</title>
-<!--     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>header</title>
+	<!--     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -37,71 +38,73 @@
     			document.form1.submit();
     		});
     	}); -->
-    
-<!--     </script> -->
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-  }
 
-  .header {
-    background-color: #333;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+	<!--     </script> -->
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f5f5f5;
+		}
 
-  .header-left {
-    display: flex;
-    align-items: center;
-  }
+		.header {
+			background-color: #333;
+			padding: 10px 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-  .header-left a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px;
-  }
+		.header-left {
+			display: flex;
+			align-items: center;
+		}
 
-  .header-left a:hover {
-    text-decoration: underline;
-  }
+		.header-left a {
+			color: white;
+			text-decoration: none;
+			margin: 0 15px;
+			font-size: 16px;
+		}
 
-  .header-right {
-    display: flex;
-    align-items: center;
-  }
+		.header-left a:hover {
+			text-decoration: underline;
+		}
 
-  .login-button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    margin: 0 10px;
-    cursor: pointer;
-  }
+		.header-right {
+			display: flex;
+			align-items: center;
+		}
 
-  .logout-button {
-    background-color: #dc3545;
-  }
-</style>
+		.login-button {
+			background-color: #007bff;
+			color: white;
+			padding: 8px 20px;
+			border: none;
+			border-radius: 4px;
+			margin: 0 10px;
+			cursor: pointer;
+		}
+
+		.logout-button {
+			background-color: #dc3545;
+		}
+	</style>
 </head>
+
 <body>
-  <div class="header">
-    <div class="header-left">
-      <a href="/memo/home">Home</a>
-      <a href="/memo/memojoin">メモ帳</a>
-      <a href="/guest/guestlist">ゲストブック</a>
-    </div>
-    <div class="header-right">
-      <a class="login-button" href="/login/login">ログイン</a>
-      <a class="login-button logout-button" href="/login/logoutdo">ログアウト</a>
-    </div>
-  </div>
+	<div class="header">
+		<div class="header-left">
+			<a href="/memo/home">Home</a>
+			<a href="/memo/memojoin">メモ帳</a>
+			<a href="/guest/guestlist">ゲストブック</a>
+		</div>
+		<div class="header-right">
+			<a class="login-button" href="/login/login">ログイン</a>
+			<a class="login-button logout-button" href="/login/logoutdo">ログアウト</a>
+		</div>
+	</div>
 </body>
+
 </html>

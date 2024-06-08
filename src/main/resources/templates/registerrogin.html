@@ -1,117 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    	$(function() {
-    		  		
-    		// 登録
-    		$("#btnjoin").click(function() {
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 
-    			document.form1.action="/login/memberinsert";
-    			document.form1.submit();
-    		});
-    	});
-    
-    </script>
-    <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-  }
-  
-  .registration-form {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top:100px;
-  }
+	<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(function () {
 
-  .registration-form input[type="text"],
-  .registration-form input[type="password"] {
-    width: 70%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-  }
+			// 登録
+			$("#btnjoin").click(function () {
 
-  .registration-form input[type="button"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+				document.form1.action = "/login/memberinsert";
+				document.form1.submit();
+			});
+		});
 
-  .registration-form input[type="button"]:hover {
-    background-color: #0056b3;
-  }
+	</script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+		}
 
-  .registration-form label {
-    font-weight: bold;
-    margin:150px;
-    
-  }
+		.registration-form {
+			max-width: 500px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+			margin-top: 100px;
+		}
 
-  .registration-form div {
-    text-align: center;
-  }
-        .header {
-    background-color: #333;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+		.registration-form input[type="text"],
+		.registration-form input[type="password"] {
+			width: 70%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			outline: none;
+		}
 
-  .header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px;
-  }
+		.registration-form input[type="button"] {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
 
-  .header a:hover {
-    text-decoration: underline;
-  }
-  
-</style>
+		.registration-form input[type="button"]:hover {
+			background-color: #0056b3;
+		}
+
+		.registration-form label {
+			font-weight: bold;
+			margin: 150px;
+
+		}
+
+		.registration-form div {
+			text-align: center;
+		}
+
+		.header {
+			background-color: #333;
+			padding: 10px 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.header a {
+			color: white;
+			text-decoration: none;
+			margin: 0 15px;
+			font-size: 16px;
+		}
+
+		.header a:hover {
+			text-decoration: underline;
+		}
+	</style>
 </head>
-<body>
-<th:block th:include="header"></th:block>
 
-<div class="registration-form">
-	<th:block th:if="${existsError == true}">
-	<font color="red">入力内容に誤りがあります。</font>
-	</th:block>
-  <form name="form1" method="post">
-    <div>
-      <label for="idx">ID(メールアドレス)</label>
-      <input type="text" name="idx" th:value="${idx}" placeholder="info@example.com">
-    </div>
-    <div>
-      <label for="passwd">PW</label>
-      <input type="password" name="passwd" th:value="${passwd}" placeholder="半角英数50字以内">
-    </div>
-    <div>
-      <label for="name">名前</label>
-      <input type="text" name="name" th:value="${name}" placeholder="全角入力50字以内">
-    </div>
-    <div>
-      <input type="button" id="btnjoin" value="登録" class="btn btn-outline-primary">
-    </div>
-  </form>
-</div>
+<body>
+	<th:block th:include="header"></th:block>
+
+	<div class="registration-form">
+		<th:block th:if="${existsError == true}">
+			<font color="red">入力内容に誤りがあります。</font>
+		</th:block>
+		<form name="form1" method="post">
+			<div>
+				<label for="idx">ID(メールアドレス)</label>
+				<input type="text" name="idx" th:value="${idx}" placeholder="info@example.com">
+			</div>
+			<div>
+				<label for="passwd">PW</label>
+				<input type="password" name="passwd" th:value="${passwd}" placeholder="半角英数50字以内">
+			</div>
+			<div>
+				<label for="name">名前</label>
+				<input type="text" name="name" th:value="${name}" placeholder="全角入力50字以内">
+			</div>
+			<div>
+				<input type="button" id="btnjoin" value="登録" class="btn btn-outline-primary">
+			</div>
+		</form>
+	</div>
 </body>
+
 </html>

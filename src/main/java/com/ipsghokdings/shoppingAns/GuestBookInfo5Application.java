@@ -19,21 +19,20 @@ public class GuestBookInfo5Application {
 	}
 
 	//DaoとXMLファイルの接続
-		@Bean
-		public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
-			//XMLで管理するsplクエリをリターンする。
-			SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-			bean.setDataSource(dataSource);
-			//どこにSQLファイル用のXMLファイルがあるかを指定し、リソースを配列に格納
-			Resource[] res = 
-					new PathMatchingResourcePatternResolver()
-					.getResources("classpath:mappers/*.xml");
-			bean.setMapperLocations(res);
-			return bean.getObject();
-		}
-		
-		@Bean
-		public SqlSessionTemplate sqlSession(SqlSessionFactory factory) {
-			return new SqlSessionTemplate(factory);
-		}
+	@Bean
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+		//XMLで管理するsplクエリをリターンする。
+		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+		bean.setDataSource(dataSource);
+		//どこにSQLファイル用のXMLファイルがあるかを指定し、リソースを配列に格納
+		Resource[] res = new PathMatchingResourcePatternResolver()
+				.getResources("classpath:mappers/*.xml");
+		bean.setMapperLocations(res);
+		return bean.getObject();
 	}
+
+	@Bean
+	public SqlSessionTemplate sqlSession(SqlSessionFactory factory) {
+		return new SqlSessionTemplate(factory);
+	}
+}
