@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!-- <h1 th:text="${memolist.idx}"></h1> -->
+<table border="1" >
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>名前</th>
+                <th>メモ</th>
+                <th>日付</th>
+             
+            </tr>
+        </thead>
+        <tbody th:each="memo : ${memolist}" th:object=${memo}>
+            <td th:text="${memo.idx}"></td>
+            <td th:text="${memo.writer}"></td>
+            <td><a href="./detail.html" th:text="${memo.memo}"
+            	th:href="@{/memodetail/{idx}(idx=${memo.idx})}"></a></td>
+            <td th:text="*{post_date}"></td>
+        </tbody>
+    </table>
+</body>
+</html>

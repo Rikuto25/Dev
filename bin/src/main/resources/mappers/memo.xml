@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--MyBatisを使用するxmlファイルであることを宣言-->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="memo">
+	<select id="list" resultType="com.ipsghokdings.shoppingAns.GestDTO">
+	SELECT * FROM memo ORDER BY idx DESC
+	</select>
+	<insert id="insert">
+	insert into memo(
+		idx,
+		purpose,
+		location,
+		writer,
+		attendee,
+		memo,
+		conclusion
+		)
+	values(
+		(select nvl(max(idx)+1,1) from memo),
+		#{purpose},
+		#{location},
+		#{writer},
+		#{attendee},
+		#{memo},
+		#{conclusion}
+		)
+	</insert>
+	<select id="detail" resultType="map" >
+    	SELECT * FROM memo WHERE idx = #{idx}
+	</select>
+	
+
+</mapper>

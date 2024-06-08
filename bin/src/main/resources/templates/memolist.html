@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <!--  <div>
+        <span colspan="2"><%@ include file="/header.html" %></span>
+    </div>
+        -->
+  
+
+    <table border="1" th:each="${memolist}" th:object="${row}">
+      
+        <tr>
+            <td>NO</td>
+            <td>名前</td>
+            <td>メモ</td>
+            <td>日付</td>
+        </tr>
+
+        <tr>
+            <td><span th:value="${row.idx}">$(row.idx)</span></td>
+            <td><span th:value="${row.writer}">$(row.writer)</span></td>
+            <td><a th:href="#"><span th:value="${row.memo}">$(row.memo)</span></a></td>
+         
+        </tr>
+        
+    </table>
+</body>
+</html>

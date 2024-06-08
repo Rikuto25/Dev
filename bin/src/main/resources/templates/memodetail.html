@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>メモ帳</h2>
+        名前：<input type="text" name="name" th:value="${name}"><br>
+        メモ：<input type="text"  name="memo" th:value="${memo}"><br>
+        <input type="button" id="btnUpdate" value="修正" >
+        <input type="button" id="btnDelete" value="削除">
+        <input type="button" value="目録">
+    </div>
+</body>
+</html>

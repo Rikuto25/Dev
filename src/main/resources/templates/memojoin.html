@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    
+    $(function() {
+		// ページ読み込み時に自動的に実行される関数
+		list();
+		// 登録ボタンを押下したときに実行
+		$('#btnSave').on('click', function() {
+			insert();
+		})
+		
+		function insert() {
+
+		let writer = $("#writer").val();
+		let memo = $("#memo").val();
+
+		let params = {
+			"writer" : writer,
+			"memo" : memo,
+			
+		};
+
+		$.ajax({
+			type : "post",
+			//送り出すデータ
+			data : params,
+			//送り先URL
+			url : "/memo/insert",
+			//成功時の処理
+			success : function() {
+				list("search=");
+				//入力値を空にする
+			
+				$("#memo").val("");
+			}
+		});
+	}
+		
+		function list() {
+		
+			$.ajax({
+				
+				//送り先URL
+				url : "/memo/list",
+				//成功時の処理
+				success : function(txt) {
+					//idが「result]のコンテンツにサーバーから
+					//送られてくる画面（今回はlist.jsp）を代入する
+					$("#result").html(txt);
+				}
+
+			});
+		}
+    });
+    </script>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+
+  .header {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+  }
+
+  .header a:hover {
+    text-decoration: underline;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  td a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  td a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+<th:block th:include="header"></th:block>
+
+    <div align="center">
+        <h2>メモ帳</h2><br><br>
+        
+        <form>
+        名前：<input type="text" id="writer" th:value="${logindto}" readonly>
+        メモ：<input type="text" id="memo" placeholder="300文字以内" size="100">
+        <input type="button" value="登録" id="btnSave">
+        </form>
+    </div>
+    
+    <div id="result"></div>
+</body>
+
+</html>

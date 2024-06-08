@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	
+
+</head>
+<body>
+<th:block th:include="header"></th:block>
+  
+
+    <table border="1" th:each="${memolist}" th:object="${row}">
+    <tr>
+      <th>NO</th>
+      <th>名前</th>
+      <th>メモ</th>
+      <th>日付</th>
+    </tr>
+    <tr>
+      <td><span th:text="${row.idx}"></span></td>
+      <td><span th:text="${row.writer}"></span></td>
+      <td><a th:href="#"><span th:text="${row.memo}"></span></a></td>
+      <td><span th:text="${row.date}"></span></td>
+    </tr>
+  </table>
+</body>
+</html>
