@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--MyBatisを使用するxmlファイルであることを宣言 -->
+<!--MyBatisを使用するxmlファイルであることを宣言-->
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
+  
+  
 <mapper namespace="memo">
-	<select id="list"
-		resultType="com.ipsghokdings.shoppingAns.MemoDTO">
-		SELECT * FROM memo ORDER BY idx DESC
-	</select>
-
-	<select id="login"
-		resultType="com.ipsghokdings.shoppingAns.LoginDTO">
-		SELECT * FROM member WHERE idx = #{idx} AND passwd = #{passwd}
-	<select id="list" resultType="com.ipsghokdings.guestbook.MemoDTO">
+	<select id="list" resultType="com.ipsghokdings.shoppingAns.GestDTO">
 	SELECT * FROM memo ORDER BY idx DESC
 	</select>
-
-	<select id="login" resultType="com.ipsghokdings.guestbook.LoginDTO">
-	SELECT * FROM member WHERE idx = #{idx} AND passwd = #{passwd}
-	</select>
-
 	<insert id="insert">
-		INSERT INTO memo(
+	insert into memo(
 		idx,
 		purpose,
 		location,
@@ -33,85 +20,19 @@
 		memo,
 		conclusion
 		)
-		values(
+	values(
 		(select nvl(max(idx)+1,1) from memo),
-		'test',
-		'test',
+		#{purpose},
+		#{location},
 		#{writer},
-		'test',
+		#{attendee},
 		#{memo},
-		'test'
+		#{conclusion}
 		)
 	</insert>
-	<insert id="guestinsert">
-		INSERT INTO guestbook(
-		idx,
-		email,
-		name,
-		content
-
-		)
-		values(
-		(select nvl(max(idx)+1,1) from guestbook),
-		#{email},
-		#{name},
-		#{content}
-
-		)
-	</insert>
-
-
-	<select id="detail" resultType="com.ipsghokdings.guestbook.MemoDTO" >
+	<select id="detail" resultType="map" >
     	SELECT * FROM memo WHERE idx = #{idx}
 	</select>
-	<select id="guestdetail" resultType="com.ipsghokdings.guestbook.GuestDTO" >
-    	SELECT * FROM guestbook WHERE idx = #{idx}
-	</select>
-
-	<select id="guestlist" resultType="com.ipsghokdings.guestbook.GuestDTO">
-		SELECT * FROM guestbook ORDER BY idx DESC
-	</select>
-
-
-
-	<update id="update">
-		UPDATE memo
-		SET purpose='test',
-		location='test',
-		writer=#{writer},
-		attendee='test',
-		memo=#{memo},
-		conclusion='test'
-		WHERE idx=#{idx}
-	</update>
-	<update id="guestupdate">
-		UPDATE guestbook
-		SET name=#{name},
-		email=#{email},
-		content=#{content}
-		WHERE idx=#{idx}
-	</update>
-
-	<delete id="delete">
-		delete from memo
-		where idx=#{idx}
-	</delete>
-	<delete id="guestdelete">
-		DELETE FROM guestbook
-		WHERE idx=#{idx}
-	</delete>
-
-	<insert id="memberinsert">
-		insert into member(
-		idx,
-		passwd,
-		name
-		)
-		values(
-		#{idx},
-		#{passwd},
-		#{name}
-		)
-	</insert>
+	
 
 </mapper>
