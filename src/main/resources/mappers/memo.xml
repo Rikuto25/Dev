@@ -77,7 +77,6 @@
 	</select>
 
 
-
 	<update id="update">
 		UPDATE memo
 		SET purpose='test',
