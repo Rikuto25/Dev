@@ -1,4 +1,4 @@
-package com.ipsghokdings.shoppingAns;
+package com.ipsghokdings.guestbook;
 
 import java.io.IOException;
 

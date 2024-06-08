@@ -7,7 +7,7 @@
   
   
 <mapper namespace="memo">
-	<select id="list" resultType="com.ipsghokdings.shoppingAns.GestDTO">
+	<select id="list" resultType="com.ipsghokdings.guestbook.GestDTO">
 	SELECT * FROM memo ORDER BY idx DESC
 	</select>
 	<insert id="insert">

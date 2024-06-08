@@ -7,6 +7,7 @@
 
 
 <mapper namespace="memo">
+<<<<<<< HEAD
 	<select id="list"
 		resultType="com.ipsghokdings.shoppingAns.MemoDTO">
 		SELECT * FROM memo ORDER BY idx DESC
@@ -15,6 +16,14 @@
 	<select id="login"
 		resultType="com.ipsghokdings.shoppingAns.LoginDTO">
 		SELECT * FROM member WHERE idx = #{idx} AND passwd = #{passwd}
+=======
+	<select id="list" resultType="com.ipsghokdings.guestbook.MemoDTO">
+	SELECT * FROM memo ORDER BY idx DESC
+	</select>
+
+	<select id="login" resultType="com.ipsghokdings.guestbook.LoginDTO">
+	SELECT * FROM member WHERE idx = #{idx} AND passwd = #{passwd}
+>>>>>>> #1-clean-package-rename
 	</select>
 
 	<insert id="insert">
@@ -55,17 +64,14 @@
 	</insert>
 
 
-	<select id="detail"
-		resultType="com.ipsghokdings.shoppingAns.MemoDTO">
-		SELECT * FROM memo WHERE idx = #{idx}
+	<select id="detail" resultType="com.ipsghokdings.guestbook.MemoDTO" >
+    	SELECT * FROM memo WHERE idx = #{idx}
 	</select>
-	<select id="guestdetail"
-		resultType="com.ipsghokdings.shoppingAns.GuestDTO">
-		SELECT * FROM guestbook WHERE idx = #{idx}
+	<select id="guestdetail" resultType="com.ipsghokdings.guestbook.GuestDTO" >
+    	SELECT * FROM guestbook WHERE idx = #{idx}
 	</select>
 
-	<select id="guestlist"
-		resultType="com.ipsghokdings.shoppingAns.GuestDTO">
+	<select id="guestlist" resultType="com.ipsghokdings.guestbook.GuestDTO">
 		SELECT * FROM guestbook ORDER BY idx DESC
 	</select>
 

@@ -1,4 +1,4 @@
-package com.ipsghokdings.shoppingAns;
+package com.ipsghokdings.guestbook;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
