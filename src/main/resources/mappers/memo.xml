@@ -33,6 +33,5 @@
 	<select id="detail" resultType="map" >
     	SELECT * FROM memo WHERE idx = #{idx}
 	</select>
-	
 
 </mapper>
