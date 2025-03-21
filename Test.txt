@@ -712,7 +712,7 @@ Dim objFldr As FileSystemObject
     'キャンセルを押すとマクロ終了
     If flderPath = "False" Then Exit Sub
 
-‘選択されているセルを取得
+'選択されているセルを取得
 Set ws = ActiveSheet
 Set targetCell = Selection.Cells(1, 1)
 
