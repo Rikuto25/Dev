@@ -109,3 +109,78 @@ Sub GetFileNames()
     
     MsgBox "ファイル取得が完了しました！", vbInformation
 End Sub
+
+
+
+サブフォルダまで検索
+Sub GetAllFiles()
+    Dim wsSource As Worksheet
+    Dim wsOutput As Worksheet
+    Dim cell As Range
+    Dim folderPath As String
+    Dim rowNum As Integer
+    
+    ' 元データのシート（A列にフォルダパスがあるシート）
+    Set wsSource = ThisWorkbook.Sheets("Sheet1")  ' シート名は適宜変更
+    
+    ' 新しいシートを作成して出力用に設定
+    Set wsOutput = ThisWorkbook.Sheets.Add
+    wsOutput.Name = "ファイル一覧_" & Format(Now, "hhmmss") ' 一意な名前を設定
+    
+    ' ヘッダーを設定
+    wsOutput.Cells(1, 1).Value = "フォルダパス"
+    wsOutput.Cells(1, 2).Value = "ファイル名"
+    rowNum = 2 ' 出力開始行
+
+    ' A1セルから開始し、値がなくなるまで処理
+    Set cell = wsSource.Range("A1")
+    
+    Do While cell.Value <> ""
+        folderPath = cell.Value
+        
+        ' パスの最後に "\" を追加（必要なら）
+        If Right(folderPath, 1) <> "\" Then folderPath = folderPath & "\"
+        
+        ' 指定フォルダとサブフォルダ内のファイルを取得
+        Call GetFilesRecursive(folderPath, wsOutput, rowNum)
+        
+        ' 次のフォルダへ
+        Set cell = cell.Offset(1, 0)
+    Loop
+    
+    MsgBox "ファイル取得が完了しました！", vbInformation
+End Sub
+
+' 再帰的にフォルダ内のすべてのファイルを取得
+Sub GetFilesRecursive(ByVal folderPath As String, ByVal wsOutput As Worksheet, ByRef rowNum As Integer)
+    Dim fso As Object
+    Dim folder As Object
+    Dim subFolder As Object
+    Dim file As Object
+
+    ' FileSystemObjectを作成
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    ' フォルダが存在しない場合は処理を中断
+    If Not fso.FolderExists(folderPath) Then
+        wsOutput.Cells(rowNum, 1).Value = folderPath
+        wsOutput.Cells(rowNum, 2).Value = "（フォルダなし）"
+        rowNum = rowNum + 1
+        Exit Sub
+    End If
+    
+    ' 指定フォルダをセット
+    Set folder = fso.GetFolder(folderPath)
+    
+    ' フォルダ内のファイルを取得
+    For Each file In folder.Files
+        wsOutput.Cells(rowNum, 1).Value = folder.Path
+        wsOutput.Cells(rowNum, 2).Value = file.Name
+        rowNum = rowNum + 1
+    Next file
+    
+    ' サブフォルダ内のファイルも取得（再帰処理）
+    For Each subFolder In folder.SubFolders
+        Call GetFilesRecursive(subFolder.Path, wsOutput, rowNum)
+    Next subFolder
+End Sub
