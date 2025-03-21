@@ -550,3 +550,72 @@ Sub 貼り付けエビデンス()
     
     MsgBox "エビデンス貼り付け完了", vbInformation
 End Sub
+
+
+
+Sub 貼り付けエビデンス()
+    Dim ws As Worksheet
+    Dim folderPath As String
+    Dim fileName As String
+    Dim pic As Picture
+    Dim lastRow As Long
+    Dim targetCell As Range
+    Dim picWidth As Double, picHeight As Double
+    Dim scaleFactor As Double
+
+    ' --- 選択されているセルを取得 ---
+    Set ws = ActiveSheet
+    Set targetCell = Selection.Cells(1, 1) ' 選択範囲の先頭セル
+    
+    ' --- フォルダ選択ダイアログを表示 ---
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "エビデンス画像のフォルダを選択してください"
+        If .Show = -1 Then
+            folderPath = .SelectedItems(1) & "\"
+        Else
+            MsgBox "フォルダが選択されませんでした", vbExclamation
+            Exit Sub
+        End If
+    End With
+
+    ' --- 指定フォルダの画像を取得 ---
+    fileName = Dir(folderPath & "*.png") ' PNG画像を取得
+    If fileName = "" Then fileName = Dir(folderPath & "*.jpg") ' JPG画像を取得
+    If fileName = "" Then
+        MsgBox "画像ファイルが見つかりません", vbExclamation
+        Exit Sub
+    End If
+    
+    ' --- 画像を順番に貼り付ける ---
+    Do While fileName <> ""
+        ' 画像を挿入（トリミングなし、縦横比100%）
+        Set pic = ws.Pictures.Insert(folderPath & fileName)
+        
+        ' 画像の幅と高さを取得
+        picWidth = pic.Width
+        picHeight = pic.Height
+        
+        ' 縦横比を保つためのスケールファクター計算
+        ' 例えば、画像の幅を400ピクセルに設定する場合
+        scaleFactor = 400 / picWidth
+        
+        ' 幅をスケーリング
+        pic.Width = picWidth * scaleFactor
+        pic.Height = picHeight * scaleFactor
+        
+        ' 画像の位置を選択セルの左上に合わせる
+        pic.Top = targetCell.Top
+        pic.Left = targetCell.Left
+        
+        ' 画像のサイズを変更した場合に調整された位置を更新
+        lastRow = ws.Cells(ws.Rows.Count, targetCell.Column).End(xlUp).Row
+        
+        ' 次の画像の貼り付け位置を決める（最後の画像の下に3行空ける）
+        Set targetCell = ws.Cells(lastRow + 4, targetCell.Column)
+        
+        ' 次の画像取得
+        fileName = Dir()
+    Loop
+    
+    MsgBox "エビデンス貼り付け完了", vbInformation
+End Sub
