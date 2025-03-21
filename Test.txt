@@ -1,1 +1,53 @@
 Test
+
+Sub GetFileNames()
+    Dim ws As Worksheet
+    Dim cell As Range
+    Dim folderPath As String
+    Dim fileName As String
+    Dim rowNum As Integer
+    Dim colNum As Integer
+    
+    ' 対象のシートを設定（アクティブシートでも可）
+    Set ws = ThisWorkbook.Sheets("Sheet1")  ' シート名を適宜変更
+    
+    ' A列の最初のセル(A1)から開始
+    Set cell = ws.Range("A1")
+    
+    ' 出力開始位置（B列）
+    colNum = 2  ' B列に出力
+    
+    ' 値があるセルを繰り返し処理
+    Do While cell.Value <> ""
+        folderPath = cell.Value
+        
+        ' パスの最後に "\" を追加（必要なら）
+        If Right(folderPath, 1) <> "\" Then folderPath = folderPath & "\"
+        
+        ' 最初のファイル取得
+        fileName = Dir(folderPath & "*.*") ' すべてのファイル取得
+        
+        ' 出力用の行を現在のセルの行に合わせる
+        rowNum = cell.Row
+        
+        ' ファイルが存在する場合
+        If fileName <> "" Then
+            Do While fileName <> ""
+                ' セルに出力（B列）
+                ws.Cells(rowNum, colNum).Value = fileName
+                rowNum = rowNum + 1  ' 次の行へ
+                
+                ' 次のファイル取得
+                fileName = Dir
+            Loop
+        Else
+            ' ファイルがない場合は「（ファイルなし）」と記載
+            ws.Cells(rowNum, colNum).Value = "（ファイルなし）"
+        End If
+        
+        ' 次のディレクトリパスへ（A列を下に移動）
+        Set cell = cell.Offset(1, 0)
+    Loop
+    
+    MsgBox "ファイル取得が完了しました！", vbInformation
+End Sub
