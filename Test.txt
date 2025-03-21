@@ -745,3 +745,9 @@ Set targetCell = Selection.Cells(1, 1)
     Next
 
 End Sub
+
+
+
+自動でゴミ箱空にする
+@ECHO OFF
+cmd.exe /c "echo Y|PowerShell.exe -NoProfile -Command Clear-RycycleBin"
