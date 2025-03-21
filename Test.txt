@@ -184,3 +184,69 @@ Sub GetFilesRecursive(ByVal folderPath As String, ByVal wsOutput As Worksheet, B
         Call GetFilesRecursive(subFolder.Path, wsOutput, rowNum)
     Next subFolder
 End Sub
+
+
+
+エビデンス自動貼り付け
+
+Sub 貼り付けエビデンス()
+    Dim ws As Worksheet
+    Dim folderPath As String
+    Dim fileName As String
+    Dim pic As Picture
+    Dim rowNum As Integer
+    Dim colNum As Integer
+    Dim targetCell As Range
+    
+    ' --- 選択されているセルを取得 ---
+    Set ws = ActiveSheet
+    Set targetCell = Selection.Cells(1, 1) ' 選択範囲の先頭セル
+    
+    ' 貼り付け開始位置
+    rowNum = targetCell.Row
+    colNum = targetCell.Column
+    
+    ' --- フォルダ選択ダイアログを表示 ---
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "エビデンス画像のフォルダを選択してください"
+        If .Show = -1 Then
+            folderPath = .SelectedItems(1) & "\"
+        Else
+            MsgBox "フォルダが選択されませんでした", vbExclamation
+            Exit Sub
+        End If
+    End With
+
+    ' --- 指定フォルダの画像を取得 ---
+    fileName = Dir(folderPath & "*.png") ' PNG画像を取得
+    If fileName = "" Then fileName = Dir(folderPath & "*.jpg") ' JPG画像を取得
+    If fileName = "" Then
+        MsgBox "画像ファイルが見つかりません", vbExclamation
+        Exit Sub
+    End If
+    
+    ' --- 画像を順番に貼り付ける ---
+    Do While fileName <> ""
+        ' 貼り付けるセルを設定
+        Set targetCell = ws.Cells(rowNum, colNum)
+        
+        ' 画像を挿入
+        Set pic = ws.Pictures.Insert(folderPath & fileName)
+        
+        ' 画像の位置とサイズをセルに合わせる
+        With pic
+            .Top = targetCell.Top
+            .Left = targetCell.Left
+            .Width = targetCell.Width
+            .Height = targetCell.Height
+        End With
+        
+        ' 次の行に移動（3セル間隔を空ける）
+        rowNum = rowNum + 4 ' 画像の下に3セル開ける（+1 で次のセル、+3 で間隔確保）
+        
+        ' 次の画像取得
+        fileName = Dir()
+    Loop
+    
+    MsgBox "エビデンス貼り付け完了", vbInformation
+End Sub
