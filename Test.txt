@@ -690,3 +690,58 @@ Sub 貼り付けエビデンス()
 
     MsgBox "エビデンス貼り付け完了", vbInformation
 End Sub
+
+
+
+
+
+
+
+
+
+
+Sub 画像貼り付け()
+Dim lngTop As Long
+Dim objFile As Object
+Dim objFldr As FileSystemObject
+
+    Set objFldr = CreateObject("Scripting.FileSystemObject")
+
+    'フォルダパスを入力
+    flderPath = Application.InputBox("画像貼り付け", "画像フォルダを入力", Type:=2)
+    'キャンセルを押すとマクロ終了
+    If flderPath = "False" Then Exit Sub
+
+‘選択されているセルを取得
+Set ws = ActiveSheet
+Set targetCell = Selection.Cells(1, 1)
+
+    '貼り付け開始位置
+    setTop = targetCell.Top
+    setLeft = targetCell.Left
+    '画像の高さ
+    setHeight = 734
+    '画像の幅
+    setWidth = 1422
+    '画像の間隔
+    aaa = 75
+    span = aaa + setHeight
+    
+    
+    '画像貼り付け処理
+    For Each objFile In objFldr.GetFolder(flderPath).Files
+        ActiveSheet.Shapes.AddPicture _
+                Filename:=objFile, _
+                LinkToFile:=False, _
+                SaveWithDocument:=True, _
+                Left:=setLeft, _
+                Top:=setTop, _
+                Width:=setWidth, _
+                Height:=setHeight
+        
+        '次の画像の貼り付け位置を設定
+        setTop = setTop + span
+    
+    Next
+
+End Sub
