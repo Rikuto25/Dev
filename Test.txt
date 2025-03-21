@@ -51,3 +51,61 @@ Sub GetFileNames()
     
     MsgBox "ファイル取得が完了しました！", vbInformation
 End Sub
+
+
+Sub GetFileNames()
+    Dim wsSource As Worksheet
+    Dim wsOutput As Worksheet
+    Dim cell As Range
+    Dim folderPath As String
+    Dim fileName As String
+    Dim rowNum As Integer
+    
+    ' 元データのシート（A列にフォルダパスがあるシート）
+    Set wsSource = ThisWorkbook.Sheets("Sheet1")  ' シート名は適宜変更
+    
+    ' 新しいシートを作成して出力用に設定
+    Set wsOutput = ThisWorkbook.Sheets.Add
+    wsOutput.Name = "ファイル一覧_" & Format(Now, "hhmmss") ' 一意な名前を設定
+    
+    ' ヘッダーを設定
+    wsOutput.Cells(1, 1).Value = "フォルダパス"
+    wsOutput.Cells(1, 2).Value = "ファイル名"
+    rowNum = 2 ' 出力行（データ開始行）
+
+    ' A1セルから開始し、値がなくなるまで処理
+    Set cell = wsSource.Range("A1")
+    
+    Do While cell.Value <> ""
+        folderPath = cell.Value
+        
+        ' パスの最後に "\" を追加（必要なら）
+        If Right(folderPath, 1) <> "\" Then folderPath = folderPath & "\"
+        
+        ' 最初のファイル取得
+        fileName = Dir(folderPath & "*.*") ' すべてのファイル取得
+        
+        ' フォルダの出力
+        If fileName <> "" Then
+            Do While fileName <> ""
+                ' フォルダパスとファイル名を新しいシートに出力
+                wsOutput.Cells(rowNum, 1).Value = folderPath
+                wsOutput.Cells(rowNum, 2).Value = fileName
+                rowNum = rowNum + 1  ' 次の行へ
+                
+                ' 次のファイル取得
+                fileName = Dir
+            Loop
+        Else
+            ' ファイルがない場合は「（ファイルなし）」と記載
+            wsOutput.Cells(rowNum, 1).Value = folderPath
+            wsOutput.Cells(rowNum, 2).Value = "（ファイルなし）"
+            rowNum = rowNum + 1
+        End If
+        
+        ' 次のフォルダへ
+        Set cell = cell.Offset(1, 0)
+    Loop
+    
+    MsgBox "ファイル取得が完了しました！", vbInformation
+End Sub
