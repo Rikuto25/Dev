@@ -492,3 +492,61 @@ Sub 貼り付けエビデンス()
     
     MsgBox "エビデンス貼り付け完了", vbInformation
 End Sub
+
+
+
+Sub 貼り付けエビデンス()
+    Dim ws As Worksheet
+    Dim folderPath As String
+    Dim fileName As String
+    Dim pic As Picture
+    Dim lastRow As Long
+    Dim targetCell As Range
+    
+    ' --- 選択されているセルを取得 ---
+    Set ws = ActiveSheet
+    Set targetCell = Selection.Cells(1, 1) ' 選択範囲の先頭セル
+    
+    ' --- フォルダ選択ダイアログを表示 ---
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "エビデンス画像のフォルダを選択してください"
+        If .Show = -1 Then
+            folderPath = .SelectedItems(1) & "\"
+        Else
+            MsgBox "フォルダが選択されませんでした", vbExclamation
+            Exit Sub
+        End If
+    End With
+
+    ' --- 指定フォルダの画像を取得 ---
+    fileName = Dir(folderPath & "*.png") ' PNG画像を取得
+    If fileName = "" Then fileName = Dir(folderPath & "*.jpg") ' JPG画像を取得
+    If fileName = "" Then
+        MsgBox "画像ファイルが見つかりません", vbExclamation
+        Exit Sub
+    End If
+    
+    ' --- 画像を順番に貼り付ける ---
+    Do While fileName <> ""
+        ' 画像を挿入（サイズ変更なし）
+        Set pic = ws.Pictures.Insert(folderPath & fileName)
+        
+        ' 画像の位置を選択セルの左上に合わせる
+        With pic
+            .Top = targetCell.Top
+            .Left = targetCell.Left
+        End With
+        
+        ' --- 最後に貼り付けた画像の下に3行空けて次の画像を貼り付け ---
+        ' 最後に配置された画像の下端位置を計算し、3行空ける
+        lastRow = ws.Cells(ws.Rows.Count, targetCell.Column).End(xlUp).Row
+        
+        ' 画像を貼り付けたセルの下に3行空けて次の画像を配置
+        Set targetCell = ws.Cells(lastRow + 4, targetCell.Column)
+        
+        ' 次の画像取得
+        fileName = Dir()
+    Loop
+    
+    MsgBox "エビデンス貼り付け完了", vbInformation
+End Sub
