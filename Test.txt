@@ -751,3 +751,87 @@ End Sub
 自動でゴミ箱空にする
 @ECHO OFF
 cmd.exe /c "echo Y|PowerShell.exe -NoProfile -Command Clear-RycycleBin"
+
+
+テストデータ生成テンプレート
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+public class CreateTestData {
+
+    public static void main(String[] args) {
+        System.out.println("処理開始");
+        long startTime = System.currentTimeMillis();
+        Scanner scanner = new Scanner(System.in);
+
+        // ★★★出力先のフォルダを指定してください★★★
+        String folder = "D:\\Documents\\";
+
+        // ★★★作成するファイル名を指定してください★★★
+        String baseFileName = "testdata";
+
+        // ★★★1ファイルあたりの作成行数を指定してください★★★
+        int rowsPerFile = 50000;
+
+        // ★★★最初の出力ファイルの枝番を指定してください★★★
+        int startFileNumber = 1;
+
+        // ★★★最後の出力ファイルの枝番を指定してください★★★
+        int endFileNumber = 1;
+
+        // ユーザー設定
+        boolean includeHeader = true;
+        String extension = ".csv";
+        int primaryKey = 1;
+
+        for (int fileNumber = startFileNumber; fileNumber <= endFileNumber; fileNumber++) {
+
+            String fileName = folder + baseFileName + "_" + fileNumber + extension;
+            File file = new File(fileName);
+
+            if (Files.exists(Paths.get(fileName))) {
+                System.out.print("ファイルが既に存在します。上書きしますか？ (y/n): ");
+                String response = scanner.nextLine().trim();
+                if (!response.equalsIgnoreCase("y")) {
+                    System.out.println("ファイル生成をスキップしました: " + fileName);
+                    continue;
+                }
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+
+                if (includeHeader) {
+                    bw.write("PrimaryKey,カラム1,カラム2,カラム3,カラム4,カラム5,カラム6,カラム7,カラム8,カラム9");
+                    bw.newLine();
+                }
+
+                for (int i = 1; i <= rowsPerFile; i++, primaryKey++) {
+                    bw.write(String.format("%08d,カラム1,カラム2,カラム3,カラム4,カラム5,カラム6,カラム7,カラム8,カラム9", primaryKey));
+                    bw.newLine();
+
+                    if (i == rowsPerFile) {
+                        System.out.println("このファイルの最後の番号は: " + primaryKey);
+                    }
+                }
+
+                bw.flush();
+                System.out.println(fileName + " を出力しました。");
+                System.out.println("------------------------");
+
+            } catch (IOException ex) {
+                System.out.println("エラーが発生しました: " + ex.getMessage());
+            }
+        }
+
+        scanner.close();
+        System.out.println("処理終了");
+        long endTime = System.currentTimeMillis();
+        System.out.println("処理時間: " + (endTime - startTime) + " ms");
+    }
+}
+
