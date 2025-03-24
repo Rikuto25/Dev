@@ -835,3 +835,54 @@ public class CreateTestData {
     }
 }
 
+
+Sub CreateGanttChart()
+    Dim ws As Worksheet
+    Dim lastRow As Long, lastCol As Long
+    Dim i As Long, j As Long
+    Dim startDate As Date, endDate As Date
+    Dim currentDate As Date
+    Dim progress As Integer
+    Dim fillColor As Long
+    
+    ' アクティブシートを設定
+    Set ws = ActiveSheet
+    
+    ' 最終行・最終列を取得
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    lastCol = ws.Cells(3, ws.Columns.Count).End(xlToLeft).Column
+    
+    ' 既存の色をクリア
+    ws.Range(ws.Cells(4, 14), ws.Cells(lastRow, lastCol)).Interior.ColorIndex = xlNone
+    
+    ' ガントチャート作成（進捗を考慮）
+    For i = 4 To lastRow ' 4行目からデータを処理
+        startDate = ws.Cells(i, 7).Value ' 開始日(予定) G列
+        endDate = ws.Cells(i, 8).Value   ' 終了日(予定) H列
+        progress = ws.Cells(i, 11).Value ' 進捗（%） K列
+        
+        ' 進捗に応じて色を決定
+        Select Case progress
+            Case 0 To 49
+                fillColor = RGB(255, 0, 0) ' 赤色
+            Case 50 To 99
+                fillColor = RGB(255, 255, 0) ' 黄色
+            Case 100
+                fillColor = RGB(0, 176, 80) ' 緑色
+            Case Else
+                fillColor = xlNone ' 不正値の場合は塗りつぶしなし
+        End Select
+        
+        ' ガントバーを描画
+        For j = 14 To lastCol ' N列(14列目) から日付データを走査
+            currentDate = ws.Cells(3, j).Value ' 3行目にある日付を取得
+            
+            If currentDate >= startDate And currentDate <= endDate Then
+                ws.Cells(i, j).Interior.Color = fillColor
+            End If
+        Next j
+    Next i
+    
+    ' メッセージ表示
+    MsgBox "ガントチャートを作成しました！", vbInformation
+End Sub
